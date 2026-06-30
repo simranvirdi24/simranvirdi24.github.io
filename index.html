@@ -1,4 +1,358 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simran Kaur — Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Newsreader', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #09090b;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .font-serif-custom {
+            font-family: 'Newsreader', serif;
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #09090b;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3f3f46;
+        }
+
+        @keyframes float-subtle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .float-1 { animation: float-subtle 6s ease-in-out infinite; }
+        .float-2 { animation: float-subtle 8s ease-in-out infinite; }
+        .float-3 { animation: float-subtle 10s ease-in-out infinite; }
+        .float-4 { animation: float-subtle 12s ease-in-out infinite; }
+
+        @keyframes dash-flow {
+            0% { stroke-dashoffset: 0; }
+            100% { stroke-dashoffset: -1000; }
+        }
+
+        .dash-animate {
+            stroke-dasharray: 40 400;
+            animation: dash-flow 10s linear infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.9); opacity: 0.7; }
+            50% { transform: scale(1.1); opacity: 0.3; }
+            100% { transform: scale(0.9); opacity: 0.7; }
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .marquee {
+            animation: marquee 25s linear infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1em;
+            background: #0ea5e9;
+            margin-left: 4px;
+            animation: blink 1s step-end infinite;
+            vertical-align: text-bottom;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.92);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-scale.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .stagger-children .reveal:nth-child(1) { transition-delay: 0ms; }
+        .stagger-children .reveal:nth-child(2) { transition-delay: 100ms; }
+        .stagger-children .reveal:nth-child(3) { transition-delay: 200ms; }
+        .stagger-children .reveal:nth-child(4) { transition-delay: 300ms; }
+        .stagger-children .reveal:nth-child(5) { transition-delay: 400ms; }
+        .stagger-children .reveal:nth-child(6) { transition-delay: 500ms; }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);
+            background-size: 200% 200%;
+            animation: gradient-shift 4s ease infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card-glow {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-glow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(14,165,233,0.06) 0%, transparent 50%, rgba(168,85,247,0.06) 100%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        .card-glow:hover::before {
+            opacity: 1;
+        }
+
+        .perspective-grid {
+            transform: perspective(500px) rotateX(60deg) translateY(50px) scale(1.5);
+            background-size: 30px 30px;
+            background-image:
+                linear-gradient(rgba(56,189,248,0.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56,189,248,0.07) 1px, transparent 1px);
+            mask-image: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 70%);
+            -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 70%);
+        }
+
+        .magnetic-btn {
+            transition: transform 0.2s ease-out, box-shadow 0.3s ease;
+        }
+
+        .magnetic-btn:hover {
+            box-shadow: 0 0 30px rgba(14,165,233,0.35), 0 0 60px rgba(14,165,233,0.1);
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, #0ea5e9, #818cf8);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            border-radius: 1px;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .project-img-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(9,9,11,0.95) 0%, rgba(9,9,11,0.3) 50%, transparent 100%);
+        }
+
+        .timeline-line {
+            background: linear-gradient(to bottom, transparent, #0ea5e9, #818cf8, transparent);
+        }
+
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        .cursor-follower {
+            pointer-events: none;
+            position: fixed;
+            width: 24px;
+            height: 24px;
+            border: 1.5px solid rgba(14,165,233,0.4);
+            border-radius: 50%;
+            transition: transform 0.15s ease-out, width 0.3s ease, height 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor-follower.hover {
+            width: 48px;
+            height: 48px;
+            border-color: rgba(14,165,233,0.7);
+            background: rgba(14,165,233,0.05);
+        }
+
+        @media (max-width: 768px) {
+            .cursor-follower { display: none; }
+        }
+
+        .toast {
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .counter {
+            font-variant-numeric: tabular-nums;
+        }
+
+        .deco-ring {
+            border: 1px solid rgba(56,189,248,0.08);
+            border-radius: 50%;
+            animation: pulse-ring 4s ease-in-out infinite;
+        }
+
+        .photo-frame {
+            position: relative;
+        }
+
+        .photo-frame::before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border-radius: 1.5rem;
+            background: linear-gradient(135deg, rgba(14,165,233,0.3), rgba(168,85,247,0.3));
+            z-index: -1;
+            opacity: 0.5;
+            filter: blur(20px);
+        }
+
+        .skill-bar-fill {
+            width: 0;
+            transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .skill-bar-fill.active {
+            width: var(--fill-width);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-follower" id="cursor"></div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast fixed bottom-6 right-6 z-[100] backdrop-blur-md px-5 py-3 rounded-2xl flex items-center gap-3 text-sm font-medium">
+        <i data-lucide="check-circle" class="w-4 h-4"></i>
+        <span id="toast-message">Message sent!</span>
+    </div>
+
+    <!-- ==================== NAVIGATION ==================== -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                <a href="#hero" class="relative z-50 flex items-center gap-2.5 group">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-sky-500 via-blue-500 to-purple-500 flex items-center justify-center text-white font-bold text-sm sm:text-base shadow-lg shadow-sky-500/20 group-hover:shadow-sky-500/40 transition-shadow duration-300">
+                        S
+                    </div>
+                    <span class="font-medium text-white text-sm sm:text-base hidden sm:block tracking-tight">Simran Kaur</span>
+                </a>
+                <div class="hidden md:flex items-center gap-1">
+                    <a href="#about" class="nav-link text-zinc-400 hover:text-white px-4 py-2 text-sm font-medium transition-colors duration-300">About</a>
+                    <a href="#skills" class="nav-link text-zinc-400 hover:text-white px-4 py-2 text-sm font-medium transition-colors duration-300">Skills</a>
+                    <a href="#projects" class="nav-link text-zinc-400 hover:text-white px-4 py-2 text-sm font-medium transition-colors duration-300">Projects</a>
+                    <a href="#education" class="nav-link text-zinc-400 hover:text-white px-4 py-2 text-sm font-medium transition-colors duration-300">Education</a>
+                    <a href="#contact" class="nav-link text-zinc-400 hover:text-white px-4 py-2 text-sm font-medium transition-colors duration-300">Contact</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a href="#contact" class="hidden sm:inline-flex magnetic-btn items-center gap-2 bg-gradient-to-b from-blue-600 to-blue-700 text-white text-sm font-medium px-5 py-2.5 rounded-xl hover:from-blue-500 hover:to-blue-600 transition-all duration-300">
+                        Hire Me
+                        <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                    </a>
+                    <button id="menu-toggle" class="md:hidden relative z-50 w-10 h-10 flex items-center justify-center rounded-xl border border-white/10 hover:border-white/20 transition-colors" aria-label="Menu">
                         <div class="flex flex-col gap-1.5" id="hamburger">
                             <span class="block w-5 h-0.5 bg-white transition-all duration-300 origin-center" id="bar1"></span>
                             <span class="block w-5 h-0.5 bg-white transition-all duration-300" id="bar2"></span>
@@ -16,7 +370,8 @@
             <a href="#contact" class="mobile-nav-link text-3xl font-serif-custom text-zinc-300 hover:text-white transition-colors">Contact</a>
             <div class="mt-4">
                 <a href="#contact" class="mobile-nav-link magnetic-btn inline-flex items-center gap-2 bg-gradient-to-b from-blue-600 to-blue-700 text-white font-medium px-8 py-3 rounded-xl">
-                    Hire Me <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    Hire Me
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </a>
             </div>
         </div>
@@ -28,7 +383,6 @@
         <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-sky-500/6 rounded-full blur-[120px]"></div>
         <div class="absolute bottom-1/4 right-1/4 w-[350px] h-[350px] bg-purple-600/5 rounded-full blur-[100px]"></div>
 
-        <!-- Floating shapes -->
         <div class="absolute top-24 left-[8%] float-1 hidden lg:block">
             <div class="w-16 h-16 rounded-2xl border border-white/5 rotate-12"></div>
         </div>
@@ -42,15 +396,13 @@
             <div class="deco-ring w-20 h-20"></div>
         </div>
 
-        <!-- SVG Lines -->
         <svg class="absolute inset-0 w-full h-full pointer-events-none hidden lg:block" xmlns="http://www.w3.org/2000/svg">
-            <line x1="80" y1="180" x2="380" y2="90" stroke="rgba(56,189,248,0.06)" stroke-width="1" class="dash-animate"/>
-            <line x1="1100" y1="130" x2="1320" y2="380" stroke="rgba(129,140,248,0.06)" stroke-width="1" class="dash-animate" style="animation-delay:-3s"/>
-            <line x1="150" y1="580" x2="450" y2="680" stroke="rgba(168,85,247,0.06)" stroke-width="1" class="dash-animate" style="animation-delay:-6s"/>
+            <line x1="80" y1="180" x2="380" y2="90" stroke="rgba(56,189,248,0.06)" stroke-width="1" class="dash-animate"></line>
+            <line x1="1100" y1="130" x2="1320" y2="380" stroke="rgba(129,140,248,0.06)" stroke-width="1" class="dash-animate" style="animation-delay:-3s"></line>
+            <line x1="150" y1="580" x2="450" y2="680" stroke="rgba(168,85,247,0.06)" stroke-width="1" class="dash-animate" style="animation-delay:-6s"></line>
         </svg>
 
         <div class="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto">
-            <!-- Status badge -->
             <div class="reveal inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 mb-8 backdrop-blur-sm">
                 <span class="relative flex h-2 w-2">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -59,29 +411,23 @@
                 <span class="text-xs font-medium text-zinc-300">Open to internships & opportunities</span>
             </div>
 
-            <!-- Greeting -->
-            <p class="reveal text-sky-400/80 text-sm sm:text-base font-medium tracking-wide mb-4" style="transition-delay:50ms">NAMASTE 🙏 — I'm</p>
+            <p class="reveal text-sky-400/80 text-sm sm:text-base font-medium tracking-wide mb-4" style="transition-delay:50ms">NAMASTE &#127775; &#8212; I'm</p>
 
-            <!-- Name -->
             <h1 class="reveal text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif-custom font-normal tracking-tight leading-[0.9] mb-4" style="transition-delay:100ms">
                 <span class="text-white">Simran </span>
                 <span class="gradient-text">Kaur</span>
             </h1>
 
-            <!-- Tagline -->
             <div class="reveal mb-8" style="transition-delay:200ms">
                 <p class="text-lg sm:text-xl md:text-2xl text-zinc-400 font-light">
                     <span id="typed-text" class="text-zinc-200"></span><span class="typing-cursor"></span>
                 </p>
             </div>
 
-            <!-- Description -->
             <p class="reveal text-sm sm:text-base md:text-lg text-zinc-500 font-light leading-relaxed max-w-2xl mx-auto mb-10" style="transition-delay:300ms">
-                A passionate 17-year-old learner from Beli, Ropnagar, pursuing COPA trade at Women ITI Ropar.
-                Turning my curiosity for computers into real-world skills, one project at a time.
+                A passionate 17-year-old learner from Beli, Ropnagar, pursuing COPA trade at Women ITI Ropar. Turning my curiosity for computers into real-world skills, one project at a time.
             </p>
 
-            <!-- CTA Buttons -->
             <div class="reveal flex flex-col sm:flex-row items-center justify-center gap-4" style="transition-delay:400ms">
                 <a href="#projects" class="magnetic-btn group w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-gradient-to-b from-blue-600 to-blue-700 text-white font-medium px-8 py-3.5 rounded-xl hover:from-blue-500 hover:to-blue-600 transition-all duration-300 text-sm sm:text-base">
                     See My Work
@@ -93,7 +439,6 @@
                 </a>
             </div>
 
-            <!-- Scroll indicator -->
             <div class="reveal mt-16 sm:mt-20 flex flex-col items-center gap-2" style="transition-delay:600ms">
                 <span class="text-[10px] uppercase tracking-[0.25em] text-zinc-600 font-medium">Scroll Down</span>
                 <div class="w-5 h-8 rounded-full border border-zinc-700/70 flex items-start justify-center p-1.5">
@@ -107,42 +452,41 @@
     <section class="relative py-6 border-y border-white/5 overflow-hidden">
         <div class="flex whitespace-nowrap marquee">
             <span class="text-xl sm:text-2xl font-serif-custom text-zinc-800 mx-6">HTML</span>
-            <span class="text-sky-500/25 mx-3">✦</span>
+            <span class="text-sky-500/25 mx-3">&#10022;</span>
             <span class="text-xl sm:text-2xl font-serif-custom text-zinc-800 mx-6">CSS</span>
-            <span class="text-sky-500/25 mx-3">✦</span>
+            <span class="text-sky-500/25 mx-3">&#10022;</span>
             <span class="text-xl sm:text-2xl font-serif-custom text-zinc-800 mx-6">JavaScript</span>
-            <span class="text-sky-500/25 mx-3">✦</span>
+            <span class="text-sky-500/25 mx-3">&#10022;</span>
             <span class="text-xl sm:text-2xl font-serif-custom text-zinc-800 mx-6">MS Office</span>
-            <span class="text-sky-500/25 mx-3">✦</span>
+            <span class="text-sky-500/25 mx-3">&#10022;</span>
             <span class="text-xl sm:text-2xl font-serif-custom text-zinc-800 mx-6">Tally</span>
-            <span class="text-sky-500/25 mx-3">✦</span>
+            <span class="text-sky-500/25 mx-3">&#10022;</span>
             <span class="text-xl sm:text-2xl font-serif-custom text-zinc-800 mx-6">Python</span>
-            <span class="text-sky-500/25 mx-3">✦</span>
+            <span class="text-sky-500/25 mx-3">&#10022;</span>
             <span class="text-xl sm:text-2xl font-serif-custom text-zinc-800 mx-6">Photoshop</span>
-            <span class="text-sky-500/25 mx-3">✦</span>
+            <span class="text-sky-500/25 mx-3">&#10022;</span>
             <span class="text-xl sm:text-2xl font-serif-custom text-zinc-800 mx-6">Tailwind CSS</span>
-            <span class="text-sky-500/25 mx-3">✦</span>
+            <span class="text-sky-500/25 mx-3">&#10022;</span>
             <span class="text-xl sm:text-2xl font-serif-custom text-zinc-800 mx-6">Bootstrap</span>
-            <span class="text-sky-500/25 mx-3">✦</span>
-            <!-- duplicate -->
+            <span class="text-sky-500/25 mx-3">&#10022;</span>
             <span class="text-xl sm:text-2xl font-serif-custom text-zinc-800 mx-6">HTML</span>
-            <span class="text-sky-500/25 mx-3">✦</span>
+            <span class="text-sky-500/25 mx-3">&#10022;</span>
             <span class="text-xl sm:text-2xl font-serif-custom text-zinc-800 mx-6">CSS</span>
-            <span class="text-sky-500/25 mx-3">✦</span>
+            <span class="text-sky-500/25 mx-3">&#10022;</span>
             <span class="text-xl sm:text-2xl font-serif-custom text-zinc-800 mx-6">JavaScript</span>
-            <span class="text-sky-500/25 mx-3">✦</span>
+            <span class="text-sky-500/25 mx-3">&#10022;</span>
             <span class="text-xl sm:text-2xl font-serif-custom text-zinc-800 mx-6">MS Office</span>
-            <span class="text-sky-500/25 mx-3">✦</span>
+            <span class="text-sky-500/25 mx-3">&#10022;</span>
             <span class="text-xl sm:text-2xl font-serif-custom text-zinc-800 mx-6">Tally</span>
-            <span class="text-sky-500/25 mx-3">✦</span>
+            <span class="text-sky-500/25 mx-3">&#10022;</span>
             <span class="text-xl sm:text-2xl font-serif-custom text-zinc-800 mx-6">Python</span>
-            <span class="text-sky-500/25 mx-3">✦</span>
+            <span class="text-sky-500/25 mx-3">&#10022;</span>
             <span class="text-xl sm:text-2xl font-serif-custom text-zinc-800 mx-6">Photoshop</span>
-            <span class="text-sky-500/25 mx-3">✦</span>
+            <span class="text-sky-500/25 mx-3">&#10022;</span>
             <span class="text-xl sm:text-2xl font-serif-custom text-zinc-800 mx-6">Tailwind CSS</span>
-            <span class="text-sky-500/25 mx-3">✦</span>
+            <span class="text-sky-500/25 mx-3">&#10022;</span>
             <span class="text-xl sm:text-2xl font-serif-custom text-zinc-800 mx-6">Bootstrap</span>
-            <span class="text-sky-500/25 mx-3">✦</span>
+            <span class="text-sky-500/25 mx-3">&#10022;</span>
         </div>
     </section>
 
@@ -150,7 +494,6 @@
     <section id="about" class="relative py-24 sm:py-32 lg:py-40">
         <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-                <!-- Image Side -->
                 <div class="reveal-left relative flex justify-center lg:justify-start">
                     <div class="relative w-[280px] sm:w-[340px] aspect-[3/4]">
                         <div class="absolute -inset-4 rounded-3xl border border-white/5"></div>
@@ -158,11 +501,10 @@
                         <div class="absolute -bottom-6 -left-6 w-20 h-20 rounded-full border border-purple-500/10 float-3 hidden sm:block"></div>
 
                         <div class="photo-frame relative w-full h-full rounded-2xl overflow-hidden">
-                            <img src="https://picsum.photos/seed/simran-kaur-portrait/600/800.jpg" alt="Simran Kaur" class="w-full h-full object-cover" loading="lazy"/>
+                            <img src="https://picsum.photos/seed/simran-kaur-portrait/600/800.jpg" alt="Simran Kaur" class="w-full h-full object-cover" loading="lazy">
                             <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/50 via-transparent to-transparent"></div>
                         </div>
 
-                        <!-- Floating card -->
                         <div class="absolute -bottom-4 -right-4 sm:bottom-4 sm:-right-8 bg-zinc-900/90 backdrop-blur-xl border border-white/10 rounded-2xl p-4 float-1 shadow-2xl">
                             <div class="flex items-center gap-2 mb-1">
                                 <i data-lucide="graduation-cap" class="w-4 h-4 text-sky-400"></i>
@@ -174,7 +516,6 @@
                     </div>
                 </div>
 
-                <!-- Content Side -->
                 <div class="reveal-right">
                     <div class="inline-flex items-center gap-2 bg-sky-500/10 border border-sky-500/20 rounded-full px-3.5 py-1 mb-6">
                         <i data-lucide="heart" class="w-3 h-3 text-sky-400"></i>
@@ -182,9 +523,7 @@
                     </div>
 
                     <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif-custom tracking-tight mb-6 leading-[1.1]">
-                        A girl with big
-                        <span class="gradient-text">dreams</span> &
-                        <span class="gradient-text">determination</span>
+                        A girl with big <span class="gradient-text">dreams</span> & <span class="gradient-text">determination</span>
                     </h2>
 
                     <div class="space-y-4 mb-8">
@@ -192,11 +531,10 @@
                             <span class="text-white font-normal">Hello! I'm Simran Kaur,</span> a 17-year-old student from the beautiful village of <span class="text-sky-400/90">Beli, District Ropnagar</span> in Punjab. I'm currently pursuing the <span class="text-white font-normal">COPA (Computer Operator and Programming Assistant)</span> trade at <span class="text-white font-normal">Women ITI Ropar</span>.
                         </p>
                         <p class="text-zinc-500 font-light leading-relaxed text-sm sm:text-base">
-                            Coming from a small village hasn't stopped me from dreaming big. I believe that with hard work, dedication, and the right skills, anyone can achieve their goals — no matter where they come from. I'm passionate about learning new technologies and building things that make a difference.
+                            Coming from a small village hasn't stopped me from dreaming big. I believe that with hard work, dedication, and the right skills, anyone can achieve their goals &#8212; no matter where they come from. I'm passionate about learning new technologies and building things that make a difference.
                         </p>
                     </div>
 
-                    <!-- Quick Facts -->
                     <div class="grid grid-cols-2 gap-4 mb-8">
                         <div class="bg-white/[0.03] border border-white/[0.06] rounded-xl p-4">
                             <div class="text-2xl font-bold text-white counter" data-target="17">0</div>
@@ -244,7 +582,6 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 stagger-children">
-                <!-- Skill 1 -->
                 <div class="reveal card-glow bg-zinc-900/50 border border-white/[0.06] rounded-2xl p-6 sm:p-8 hover:border-white/[0.12] transition-all duration-500 group">
                     <div class="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500">
                         <i data-lucide="code" class="w-5 h-5 text-orange-400"></i>
@@ -257,7 +594,6 @@
                     <div class="text-right text-[11px] text-zinc-500 mt-1.5">85%</div>
                 </div>
 
-                <!-- Skill 2 -->
                 <div class="reveal card-glow bg-zinc-900/50 border border-white/[0.06] rounded-2xl p-6 sm:p-8 hover:border-white/[0.12] transition-all duration-500 group">
                     <div class="w-12 h-12 rounded-xl bg-yellow-500/10 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500">
                         <i data-lucide="file-text" class="w-5 h-5 text-yellow-400"></i>
@@ -270,7 +606,6 @@
                     <div class="text-right text-[11px] text-zinc-500 mt-1.5">90%</div>
                 </div>
 
-                <!-- Skill 3 -->
                 <div class="reveal card-glow bg-zinc-900/50 border border-white/[0.06] rounded-2xl p-6 sm:p-8 hover:border-white/[0.12] transition-all duration-500 group">
                     <div class="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500">
                         <i data-lucide="calculator" class="w-5 h-5 text-green-400"></i>
@@ -283,7 +618,6 @@
                     <div class="text-right text-[11px] text-zinc-500 mt-1.5">80%</div>
                 </div>
 
-                <!-- Skill 4 -->
                 <div class="reveal card-glow bg-zinc-900/50 border border-white/[0.06] rounded-2xl p-6 sm:p-8 hover:border-white/[0.12] transition-all duration-500 group">
                     <div class="w-12 h-12 rounded-xl bg-sky-500/10 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500">
                         <i data-lucide="braces" class="w-5 h-5 text-sky-400"></i>
@@ -296,7 +630,6 @@
                     <div class="text-right text-[11px] text-zinc-500 mt-1.5">60%</div>
                 </div>
 
-                <!-- Skill 5 -->
                 <div class="reveal card-glow bg-zinc-900/50 border border-white/[0.06] rounded-2xl p-6 sm:p-8 hover:border-white/[0.12] transition-all duration-500 group">
                     <div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500">
                         <i data-lucide="wind" class="w-5 h-5 text-purple-400"></i>
@@ -309,7 +642,6 @@
                     <div class="text-right text-[11px] text-zinc-500 mt-1.5">70%</div>
                 </div>
 
-                <!-- Skill 6 -->
                 <div class="reveal card-glow bg-zinc-900/50 border border-white/[0.06] rounded-2xl p-6 sm:p-8 hover:border-white/[0.12] transition-all duration-500 group">
                     <div class="w-12 h-12 rounded-xl bg-pink-500/10 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500">
                         <i data-lucide="image" class="w-5 h-5 text-pink-400"></i>
@@ -342,10 +674,9 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
-                <!-- Project 1 - Featured -->
                 <div class="reveal-scale lg:col-span-2 group relative rounded-2xl overflow-hidden border border-white/[0.06] hover:border-white/[0.12] transition-all duration-500 cursor-pointer">
                     <div class="aspect-[21/9] sm:aspect-[21/8]">
-                        <img src="https://picsum.photos/seed/simran-portfolio-site/1400/600.jpg" alt="Portfolio Website" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy"/>
+                        <img src="https://picsum.photos/seed/simran-portfolio-site/1400/600.jpg" alt="Portfolio Website" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
                     </div>
                     <div class="project-img-overlay"></div>
                     <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-8 lg:p-10">
@@ -356,17 +687,16 @@
                             <span class="text-[11px] font-medium text-emerald-400 bg-emerald-500/10 backdrop-blur-sm px-2.5 py-1 rounded-lg">Featured</span>
                         </div>
                         <h3 class="text-xl sm:text-2xl lg:text-3xl font-medium tracking-tight text-white mb-2">Personal Portfolio Website</h3>
-                        <p class="text-sm text-zinc-400 font-light max-w-xl mb-4">This very website! Built from scratch to showcase my skills, projects, and journey. My most proud project so far — it taught me so much about responsive design and animations.</p>
+                        <p class="text-sm text-zinc-400 font-light max-w-xl mb-4">This very website! Built from scratch to showcase my skills, projects, and journey. My most proud project so far &#8212; it taught me so much about responsive design and animations.</p>
                         <span class="inline-flex items-center gap-1.5 text-sm text-sky-400 font-medium group-hover:gap-2.5 transition-all duration-300">
                             You're looking at it! <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
                         </span>
                     </div>
                 </div>
 
-                <!-- Project 2 -->
                 <div class="reveal-scale group relative rounded-2xl overflow-hidden border border-white/[0.06] hover:border-white/[0.12] transition-all duration-500 cursor-pointer">
                     <div class="aspect-[4/3]">
-                        <img src="https://picsum.photos/seed/simran-landing-page/700/525.jpg" alt="Landing Page" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy"/>
+                        <img src="https://picsum.photos/seed/simran-landing-page/700/525.jpg" alt="Landing Page" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
                     </div>
                     <div class="project-img-overlay"></div>
                     <div class="absolute bottom-0 left-0 right-0 p-6">
@@ -382,10 +712,9 @@
                     </div>
                 </div>
 
-                <!-- Project 3 -->
                 <div class="reveal-scale group relative rounded-2xl overflow-hidden border border-white/[0.06] hover:border-white/[0.12] transition-all duration-500 cursor-pointer">
                     <div class="aspect-[4/3]">
-                        <img src="https://picsum.photos/seed/simran-excel-dashboard/700/525.jpg" alt="Excel Dashboard" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy"/>
+                        <img src="https://picsum.photos/seed/simran-excel-dashboard/700/525.jpg" alt="Excel Dashboard" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
                     </div>
                     <div class="project-img-overlay"></div>
                     <div class="absolute bottom-0 left-0 right-0 p-6">
@@ -402,10 +731,9 @@
                     </div>
                 </div>
 
-                <!-- Project 4 -->
                 <div class="reveal-scale group relative rounded-2xl overflow-hidden border border-white/[0.06] hover:border-white/[0.12] transition-all duration-500 cursor-pointer">
                     <div class="aspect-[4/3]">
-                        <img src="https://picsum.photos/seed/simran-tally-project/700/525.jpg" alt="Tally Project" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy"/>
+                        <img src="https://picsum.photos/seed/simran-tally-project/700/525.jpg" alt="Tally Project" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
                     </div>
                     <div class="project-img-overlay"></div>
                     <div class="absolute bottom-0 left-0 right-0 p-6">
@@ -421,10 +749,9 @@
                     </div>
                 </div>
 
-                <!-- Project 5 -->
                 <div class="reveal-scale group relative rounded-2xl overflow-hidden border border-white/[0.06] hover:border-white/[0.12] transition-all duration-500 cursor-pointer">
                     <div class="aspect-[4/3]">
-                        <img src="https://picsum.photos/seed/simran-calculator-js/700/525.jpg" alt="Calculator" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy"/>
+                        <img src="https://picsum.photos/seed/simran-calculator-js/700/525.jpg" alt="Calculator" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
                     </div>
                     <div class="project-img-overlay"></div>
                     <div class="absolute bottom-0 left-0 right-0 p-6">
@@ -450,7 +777,6 @@
 
         <div class="relative max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
-                <!-- Left -->
                 <div class="reveal-left">
                     <div class="inline-flex items-center gap-2 bg-sky-500/10 border border-sky-500/20 rounded-full px-3.5 py-1 mb-6">
                         <i data-lucide="book-open" class="w-3 h-3 text-sky-400"></i>
@@ -460,40 +786,36 @@
                         My learning <span class="gradient-text">path</span>
                     </h2>
                     <p class="text-zinc-400 font-light leading-relaxed text-base sm:text-lg mb-10">
-                        From a village school to an ITI trade — every step has been a lesson. Here's my story so far.
+                        From a village school to an ITI trade &#8212; every step has been a lesson. Here's my story so far.
                     </p>
 
-                    <!-- Inspirational quote -->
                     <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 sm:p-8">
                         <i data-lucide="quote" class="w-8 h-8 text-sky-500/20 mb-3"></i>
                         <p class="text-zinc-300 font-light leading-relaxed text-sm sm:text-base italic font-serif-custom">
                             "Education is the most powerful weapon which you can use to change the world."
                         </p>
-                        <p class="text-xs text-zinc-500 mt-3 font-medium">— Nelson Mandela</p>
+                        <p class="text-xs text-zinc-500 mt-3 font-medium">&#8212; Nelson Mandela</p>
                     </div>
                 </div>
 
-                <!-- Right: Timeline -->
                 <div class="reveal-right relative">
                     <div class="absolute left-[19px] top-2 bottom-2 w-px timeline-line"></div>
 
                     <div class="space-y-8">
-                        <!-- Timeline Item 1 -->
                         <div class="reveal relative pl-12">
                             <div class="absolute left-0 top-1.5 w-10 h-10 rounded-xl bg-zinc-900 border border-sky-500/30 flex items-center justify-center z-10">
                                 <i data-lucide="monitor" class="w-4 h-4 text-sky-400"></i>
                             </div>
                             <div class="bg-zinc-900/50 border border-white/[0.06] rounded-2xl p-5 sm:p-6 hover:border-white/[0.12] transition-all duration-300">
                                 <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-                                    <h3 class="text-base font-medium text-white">COPA Trade — ITI</h3>
-                                    <span class="text-[11px] font-medium text-sky-400 bg-sky-500/10 px-2.5 py-0.5 rounded-full">2024 — Present</span>
+                                    <h3 class="text-base font-medium text-white">COPA Trade &#8212; ITI</h3>
+                                    <span class="text-[11px] font-medium text-sky-400 bg-sky-500/10 px-2.5 py-0.5 rounded-full">2024 &#8212; Present</span>
                                 </div>
                                 <p class="text-sm text-sky-400/80 font-medium mb-2">Women ITI Ropar</p>
-                                <p class="text-sm text-zinc-500 font-light leading-relaxed">Currently learning Computer Operator & Programming Assistant trade — covering MS Office, Tally, HTML, CSS, JavaScript, database management, and computer fundamentals.</p>
+                                <p class="text-sm text-zinc-500 font-light leading-relaxed">Currently learning Computer Operator & Programming Assistant trade &#8212; covering MS Office, Tally, HTML, CSS, JavaScript, database management, and computer fundamentals.</p>
                             </div>
                         </div>
 
-                        <!-- Timeline Item 2 -->
                         <div class="reveal relative pl-12" style="transition-delay:150ms">
                             <div class="absolute left-0 top-1.5 w-10 h-10 rounded-xl bg-zinc-900 border border-purple-500/30 flex items-center justify-center z-10">
                                 <i data-lucide="school" class="w-4 h-4 text-purple-400"></i>
@@ -501,14 +823,13 @@
                             <div class="bg-zinc-900/50 border border-white/[0.06] rounded-2xl p-5 sm:p-6 hover:border-white/[0.12] transition-all duration-300">
                                 <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
                                     <h3 class="text-base font-medium text-white">Higher Secondary (12th)</h3>
-                                    <span class="text-[11px] font-medium text-purple-400 bg-purple-500/10 px-2.5 py-0.5 rounded-full">2022 — 2024</span>
+                                    <span class="text-[11px] font-medium text-purple-400 bg-purple-500/10 px-2.5 py-0.5 rounded-full">2022 &#8212; 2024</span>
                                 </div>
                                 <p class="text-sm text-purple-400/80 font-medium mb-2">Government School, Ropnagar</p>
                                 <p class="text-sm text-zinc-500 font-light leading-relaxed">Completed 12th standard with focus on academics. Developed interest in computers and technology that led me to choose the COPA trade.</p>
                             </div>
                         </div>
 
-                        <!-- Timeline Item 3 -->
                         <div class="reveal relative pl-12" style="transition-delay:300ms">
                             <div class="absolute left-0 top-1.5 w-10 h-10 rounded-xl bg-zinc-900 border border-indigo-500/30 flex items-center justify-center z-10">
                                 <i data-lucide="book" class="w-4 h-4 text-indigo-400"></i>
@@ -516,14 +837,13 @@
                             <div class="bg-zinc-900/50 border border-white/[0.06] rounded-2xl p-5 sm:p-6 hover:border-white/[0.12] transition-all duration-300">
                                 <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
                                     <h3 class="text-base font-medium text-white">Matriculation (10th)</h3>
-                                    <span class="text-[11px] font-medium text-indigo-400 bg-indigo-500/10 px-2.5 py-0.5 rounded-full">2020 — 2022</span>
+                                    <span class="text-[11px] font-medium text-indigo-400 bg-indigo-500/10 px-2.5 py-0.5 rounded-full">2020 &#8212; 2022</span>
                                 </div>
                                 <p class="text-sm text-indigo-400/80 font-medium mb-2">Government School, Beli</p>
-                                <p class="text-sm text-zinc-500 font-light leading-relaxed">Completed my schooling from the village school in Beli. This is where my curiosity about computers first began — in our school's small computer lab.</p>
+                                <p class="text-sm text-zinc-500 font-light leading-relaxed">Completed my schooling from the village school in Beli. This is where my curiosity about computers first began &#8212; in our school's small computer lab.</p>
                             </div>
                         </div>
 
-                        <!-- Timeline Item 4 -->
                         <div class="reveal relative pl-12" style="transition-delay:450ms">
                             <div class="absolute left-0 top-1.5 w-10 h-10 rounded-xl bg-zinc-900 border border-emerald-500/30 flex items-center justify-center z-10">
                                 <i data-lucide="rocket" class="w-4 h-4 text-emerald-400"></i>
@@ -543,7 +863,7 @@
         </div>
     </section>
 
-    <!-- ==================== WHAT'S NEXT / ASPIRATIONS ==================== -->
+    <!-- ==================== ASPIRATIONS ==================== -->
     <section class="relative py-24 sm:py-32 overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-b from-transparent via-sky-500/[0.03] to-transparent"></div>
 
@@ -600,7 +920,6 @@
 
         <div class="relative max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
-                <!-- Left -->
                 <div class="reveal-left">
                     <div class="inline-flex items-center gap-2 bg-sky-500/10 border border-sky-500/20 rounded-full px-3.5 py-1 mb-6">
                         <i data-lucide="message-circle" class="w-3 h-3 text-sky-400"></i>
@@ -610,7 +929,7 @@
                         Let's <span class="gradient-text">connect</span>
                     </h2>
                     <p class="text-zinc-400 font-light leading-relaxed text-base sm:text-lg mb-10">
-                        Whether you have an opportunity, a question, or just want to say hello — I'd love to hear from you!
+                        Whether you have an opportunity, a question, or just want to say hello &#8212; I'd love to hear from you!
                     </p>
 
                     <div class="space-y-5">
@@ -643,7 +962,6 @@
                         </div>
                     </div>
 
-                    <!-- Social Links -->
                     <div class="flex items-center gap-3 mt-10">
                         <a href="#" class="w-11 h-11 rounded-xl bg-white/5 border border-white/[0.06] flex items-center justify-center hover:border-white/20 hover:bg-white/10 transition-all duration-300 group" aria-label="Instagram">
                             <i data-lucide="instagram" class="w-4 h-4 text-zinc-500 group-hover:text-white transition-colors duration-300"></i>
@@ -660,32 +978,26 @@
                     </div>
                 </div>
 
-                <!-- Right: Form -->
                 <div class="reveal-right">
                     <form id="contact-form" class="bg-zinc-900/50 border border-white/[0.06] rounded-2xl p-6 sm:p-8 lg:p-10">
                         <div class="space-y-5">
                             <div>
                                 <label for="name" class="block text-xs font-medium text-zinc-400 mb-2">Your Name</label>
-                                <input type="text" id="name" name="name" required placeholder="Enter your name"
-                                    class="w-full bg-white/5 border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-sky-500/50 focus:ring-1 focus:ring-sky-500/25 transition-all duration-300"/>
+                                <input type="text" id="name" name="name" required placeholder="Enter your name" class="w-full bg-white/5 border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-sky-500/50 focus:ring-1 focus:ring-sky-500/25 transition-all duration-300">
                             </div>
                             <div>
                                 <label for="email" class="block text-xs font-medium text-zinc-400 mb-2">Email Address</label>
-                                <input type="email" id="email" name="email" required placeholder="you@example.com"
-                                    class="w-full bg-white/5 border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-sky-500/50 focus:ring-1 focus:ring-sky-500/25 transition-all duration-300"/>
+                                <input type="email" id="email" name="email" required placeholder="you@example.com" class="w-full bg-white/5 border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-sky-500/50 focus:ring-1 focus:ring-sky-500/25 transition-all duration-300">
                             </div>
                             <div>
                                 <label for="subject" class="block text-xs font-medium text-zinc-400 mb-2">Subject</label>
-                                <input type="text" id="subject" name="subject" required placeholder="What's this about?"
-                                    class="w-full bg-white/5 border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-sky-500/50 focus:ring-1 focus:ring-sky-500/25 transition-all duration-300"/>
+                                <input type="text" id="subject" name="subject" required placeholder="What's this about?" class="w-full bg-white/5 border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-sky-500/50 focus:ring-1 focus:ring-sky-500/25 transition-all duration-300">
                             </div>
                             <div>
                                 <label for="message" class="block text-xs font-medium text-zinc-400 mb-2">Message</label>
-                                <textarea id="message" name="message" rows="5" required placeholder="Write your message here..."
-                                    class="w-full bg-white/5 border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-sky-500/50 focus:ring-1 focus:ring-sky-500/25 transition-all duration-300 resize-none"></textarea>
+                                <textarea id="message" name="message" rows="5" required placeholder="Write your message here..." class="w-full bg-white/5 border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-sky-500/50 focus:ring-1 focus:ring-sky-500/25 transition-all duration-300 resize-none"></textarea>
                             </div>
-                            <button type="submit" id="submit-btn"
-                                class="magnetic-btn w-full group inline-flex items-center justify-center gap-2.5 bg-gradient-to-b from-blue-600 to-blue-700 text-white font-medium px-8 py-3.5 rounded-xl hover:from-blue-500 hover:to-blue-600 transition-all duration-300 text-sm">
+                            <button type="submit" id="submit-btn" class="magnetic-btn w-full group inline-flex items-center justify-center gap-2.5 bg-gradient-to-b from-blue-600 to-blue-700 text-white font-medium px-8 py-3.5 rounded-xl hover:from-blue-500 hover:to-blue-600 transition-all duration-300 text-sm">
                                 <span id="btn-text">Send Message</span>
                                 <i data-lucide="send" class="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" id="btn-icon"></i>
                                 <svg id="btn-spinner" class="hidden w-4 h-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -704,7 +1016,6 @@
     <footer class="relative border-t border-white/[0.05]">
         <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
             <div class="flex flex-col items-center text-center gap-6">
-                <!-- Logo -->
                 <div class="flex items-center gap-2.5">
                     <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-sky-500 via-blue-500 to-purple-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-sky-500/20">
                         S
@@ -712,12 +1023,10 @@
                     <span class="font-medium text-white text-sm tracking-tight">Simran Kaur</span>
                 </div>
 
-                <!-- Tagline -->
                 <p class="text-xs text-zinc-600 font-light max-w-md leading-relaxed">
-                    "From the village of Beli to the world of technology — learning, growing, and inspiring every single day."
+                    "From the village of Beli to the world of technology &#8212; learning, growing, and inspiring every single day."
                 </p>
 
-                <!-- Links -->
                 <div class="flex items-center gap-6">
                     <a href="#about" class="text-xs text-zinc-500 hover:text-white transition-colors duration-300">About</a>
                     <a href="#skills" class="text-xs text-zinc-500 hover:text-white transition-colors duration-300">Skills</a>
@@ -725,12 +1034,10 @@
                     <a href="#contact" class="text-xs text-zinc-500 hover:text-white transition-colors duration-300">Contact</a>
                 </div>
 
-                <!-- Copyright -->
                 <div class="text-[11px] text-zinc-700">
-                    © 2025 Simran Kaur. Made with ❤️ and lots of learning.
+                    &#169; 2025 Simran Kaur. Made with &#10084;&#65039; and lots of learning.
                 </div>
 
-                <!-- Back to top -->
                 <a href="#hero" class="group flex items-center gap-2 text-xs text-zinc-500 hover:text-white transition-colors duration-300 mt-2">
                     Back to top
                     <i data-lucide="arrow-up" class="w-3 h-3 group-hover:-translate-y-0.5 transition-transform duration-300"></i>
@@ -745,21 +1052,21 @@
         lucide.createIcons();
 
         // ===== TYPING EFFECT =====
-        const typedTextEl = document.getElementById('typed-text');
-        const phrases = [
+        var typedTextEl = document.getElementById('typed-text');
+        var phrases = [
             'COPA Student at Women ITI Ropar',
             'Web Development Enthusiast',
             'Future Full-Stack Developer',
-            'From Beli, Ropnagar 🇮🇳',
+            'From Beli, Ropnagar',
             'Learning Every Single Day'
         ];
-        let phraseIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        let typeSpeed = 60;
+        var phraseIndex = 0;
+        var charIndex = 0;
+        var isDeleting = false;
+        var typeSpeed = 60;
 
         function typeEffect() {
-            const currentPhrase = phrases[phraseIndex];
+            var currentPhrase = phrases[phraseIndex];
 
             if (isDeleting) {
                 typedTextEl.textContent = currentPhrase.substring(0, charIndex - 1);
@@ -785,10 +1092,10 @@
         setTimeout(typeEffect, 1000);
 
         // ===== CUSTOM CURSOR =====
-        const cursor = document.getElementById('cursor');
-        let cursorX = 0, cursorY = 0, currentX = 0, currentY = 0;
+        var cursor = document.getElementById('cursor');
+        var cursorX = 0, cursorY = 0, currentX = 0, currentY = 0;
 
-        document.addEventListener('mousemove', (e) => {
+        document.addEventListener('mousemove', function(e) {
             cursorX = e.clientX;
             cursorY = e.clientY;
         });
@@ -802,15 +1109,15 @@
         }
         animateCursor();
 
-        document.querySelectorAll('a, button, input, textarea').forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        document.querySelectorAll('a, button, input, textarea').forEach(function(el) {
+            el.addEventListener('mouseenter', function() { cursor.classList.add('hover'); });
+            el.addEventListener('mouseleave', function() { cursor.classList.remove('hover'); });
         });
 
         // ===== NAVBAR SCROLL =====
-        const navbar = document.getElementById('navbar');
+        var navbar = document.getElementById('navbar');
 
-        window.addEventListener('scroll', () => {
+        window.addEventListener('scroll', function() {
             if (window.scrollY > 80) {
                 navbar.style.background = 'rgba(9, 9, 11, 0.85)';
                 navbar.style.backdropFilter = 'blur(24px)';
@@ -821,15 +1128,14 @@
                 navbar.style.borderBottom = '1px solid transparent';
             }
 
-            // Active nav link
-            const sections = ['about', 'skills', 'projects', 'education', 'contact'];
-            sections.forEach(id => {
-                const section = document.getElementById(id);
-                const link = document.querySelector(`.nav-link[href="#${id}"]`);
+            var sections = ['about', 'skills', 'projects', 'education', 'contact'];
+            sections.forEach(function(id) {
+                var section = document.getElementById(id);
+                var link = document.querySelector('.nav-link[href="#' + id + '"]');
                 if (section && link) {
-                    const rect = section.getBoundingClientRect();
+                    var rect = section.getBoundingClientRect();
                     if (rect.top <= 200 && rect.bottom >= 200) {
-                        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                        document.querySelectorAll('.nav-link').forEach(function(l) { l.classList.remove('active'); });
                         link.classList.add('active');
                     }
                 }
@@ -837,14 +1143,14 @@
         });
 
         // ===== MOBILE MENU =====
-        const menuToggle = document.getElementById('menu-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const bar1 = document.getElementById('bar1');
-        const bar2 = document.getElementById('bar2');
-        const bar3 = document.getElementById('bar3');
-        let menuOpen = false;
+        var menuToggle = document.getElementById('menu-toggle');
+        var mobileMenu = document.getElementById('mobile-menu');
+        var bar1 = document.getElementById('bar1');
+        var bar2 = document.getElementById('bar2');
+        var bar3 = document.getElementById('bar3');
+        var menuOpen = false;
 
-        menuToggle.addEventListener('click', () => {
+        menuToggle.addEventListener('click', function() {
             menuOpen = !menuOpen;
             mobileMenu.classList.toggle('open');
             if (menuOpen) {
@@ -862,8 +1168,8 @@
             }
         });
 
-        document.querySelectorAll('.mobile-nav-link').forEach(link => {
-            link.addEventListener('click', () => {
+        document.querySelectorAll('.mobile-nav-link').forEach(function(link) {
+            link.addEventListener('click', function() {
                 menuOpen = false;
                 mobileMenu.classList.remove('open');
                 bar1.style.transform = '';
@@ -875,41 +1181,42 @@
         });
 
         // ===== SCROLL REVEAL =====
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
+        var revealObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
                 }
             });
         }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-        document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(function(el) {
             revealObserver.observe(el);
         });
 
         // ===== SKILL BAR ANIMATION =====
-        const skillObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
+        var skillObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
                 }
             });
         }, { threshold: 0.3 });
 
-        document.querySelectorAll('.skill-bar-fill').forEach(el => {
+        document.querySelectorAll('.skill-bar-fill').forEach(function(el) {
             skillObserver.observe(el);
         });
 
         // ===== CONTACT FORM =====
-        const contactForm = document.getElementById('contact-form');
-        const submitBtn = document.getElementById('submit-btn');
-        const btnText = document.getElementById('btn-text');
-        const btnIcon = document.getElementById('btn-icon');
-        const btnSpinner = document.getElementById('btn-spinner');
-        const toast = document.getElementById('toast');
-        const toastMessage = document.getElementById('toast-message');
+        var contactForm = document.getElementById('contact-form');
+        var submitBtn = document.getElementById('submit-btn');
+        var btnText = document.getElementById('btn-text');
+        var btnIcon = document.getElementById('btn-icon');
+        var btnSpinner = document.getElementById('btn-spinner');
+        var toast = document.getElementById('toast');
+        var toastMessage = document.getElementById('toast-message');
 
-        function showToast(message, type = 'success') {
+        function showToast(message, type) {
+            type = type || 'success';
             toastMessage.textContent = message;
             toast.className = 'toast fixed bottom-6 right-6 z-[100] backdrop-blur-md px-5 py-3 rounded-2xl flex items-center gap-3 text-sm font-medium';
             if (type === 'success') {
@@ -917,16 +1224,11 @@
             } else {
                 toast.classList.add('bg-red-500/10', 'border', 'border-red-500/30', 'text-red-400');
             }
-            // Update icon color
-            const icon = toast.querySelector('[data-lucide]');
-            if (icon) {
-                icon.style.color = type === 'success' ? '#34d399' : '#f87171';
-            }
-            requestAnimationFrame(() => toast.classList.add('show'));
-            setTimeout(() => toast.classList.remove('show'), 4000);
+            requestAnimationFrame(function() { toast.classList.add('show'); });
+            setTimeout(function() { toast.classList.remove('show'); }, 4000);
         }
 
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
             btnText.textContent = 'Sending...';
             btnIcon.classList.add('hidden');
@@ -934,68 +1236,67 @@
             submitBtn.disabled = true;
             submitBtn.style.opacity = '0.7';
 
-            setTimeout(() => {
+            setTimeout(function() {
                 btnText.textContent = 'Send Message';
                 btnIcon.classList.remove('hidden');
                 btnSpinner.classList.add('hidden');
                 submitBtn.disabled = false;
                 submitBtn.style.opacity = '1';
                 contactForm.reset();
-                showToast('Message sent successfully! Simran will reply soon. 🙏');
+                showToast('Message sent successfully! Simran will reply soon.');
             }, 2000);
         });
 
         // ===== SMOOTH SCROLL =====
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
+                var target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    const offset = 80;
-                    const pos = target.getBoundingClientRect().top + window.scrollY - offset;
+                    var offset = 80;
+                    var pos = target.getBoundingClientRect().top + window.scrollY - offset;
                     window.scrollTo({ top: pos, behavior: 'smooth' });
                 }
             });
         });
 
         // ===== NUMBER COUNTER =====
-        const counterObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
+        var counterObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
                 if (entry.isIntersecting) {
-                    const el = entry.target;
-                    const target = parseInt(el.getAttribute('data-target') || el.textContent.match(/(\d+)/)?.[1]);
-                    if (target) {
-                        const suffix = el.textContent.replace(/\d+/, '');
-                        let current = 0;
-                        const increment = Math.max(1, Math.floor(target / 35));
-                        const timer = setInterval(() => {
-                            current += increment;
-                            if (current >= target) {
-                                current = target;
-                                clearInterval(timer);
-                            }
-                            el.textContent = current + suffix;
-                        }, 40);
-                    }
+                    var el = entry.target;
+                    var targetVal = parseInt(el.getAttribute('data-target'));
+                    var suffix = el.textContent.replace(/\d+/, '');
+                    var current = 0;
+                    var increment = Math.max(1, Math.floor(targetVal / 35));
+                    var timer = setInterval(function() {
+                        current += increment;
+                        if (current >= targetVal) {
+                            current = targetVal;
+                            clearInterval(timer);
+                        }
+                        el.textContent = current + suffix;
+                    }, 40);
                     counterObserver.unobserve(el);
                 }
             });
         }, { threshold: 0.5 });
 
-        document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+        document.querySelectorAll('.counter').forEach(function(el) {
+            counterObserver.observe(el);
+        });
 
         // ===== PARALLAX =====
-        window.addEventListener('scroll', () => {
-            const scrollY = window.scrollY;
-            document.querySelectorAll('.float-1, .float-2, .float-3, .float-4').forEach((shape, i) => {
-                shape.style.transform = `translateY(${scrollY * (i + 1) * 0.025}px)`;
+        window.addEventListener('scroll', function() {
+            var scrollY = window.scrollY;
+            var shapes = document.querySelectorAll('.float-1, .float-2, .float-3, .float-4');
+            shapes.forEach(function(shape, i) {
+                shape.style.transform = 'translateY(' + (scrollY * (i + 1) * 0.025) + 'px)';
             });
         });
 
         // Re-init lucide
-        setTimeout(() => lucide.createIcons(), 100);
+        setTimeout(function() { lucide.createIcons(); }, 100);
     </script>
 </body>
 </html>
-```
-
